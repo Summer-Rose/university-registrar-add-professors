@@ -56,12 +56,21 @@
 
 <form action="/professor/$professor.getId()/addstudent" method="post">
   <div class="form-group">
-    <label for="course">Add student to professor</label>
-    <select name="course">
+    <label for="student">Add student to professor</label>
+    <select name="student">
       #foreach ($student in $students)
       <option value="$student.getId()">$student.getName()
       #end
     </select>
     <button type="submit" class="btn btn-success">Add Student</button>
+  </div>
+</form>
+
+<form action="/professor/$professor.getId()/addphoto" method="post">
+  <div class="form-group">
+    <label for="photo">Add image to professor</label>
+    <input type="file" name="photo" accept="image/*">
+    <!-- <input type="submit"> -->
+    <button type="submit" class="btn btn-success">Add Image</button>
   </div>
 </form>

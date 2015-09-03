@@ -16,6 +16,7 @@
       <ul class="nav navbar-nav">
         <li><a href="/courses">Courses</a></li>
         <li><a href="/students">Students</a></li>
+        <li><a href="/professors">Professors</a></li>
       </ul>
       <form action="/search/results" class="navbar-form navbar-left" role="search">
         <div class="form-group">
@@ -31,7 +32,9 @@
 <h6>Student ID: $student.getId()</h6>
 <h6>Enrolled since: $student.getEnrollDate()</h6>
 <a href="/delete/student/$student.getId()" method="get" class="btn btn-danger">Delete Student</a>
-
+<!-- Courses Table and Form -->
+<hr>
+<div class="col-md-6">
 <table class="table table-striped">
   <thead>
     <tr>
@@ -52,7 +55,6 @@
       #end
   </tbody>
 </table>
-
 <form action="/student/$student.getId()/addcourse" method="post">
   <div class="form-group">
     <label for="course">Add student to course</label>
@@ -64,3 +66,38 @@
     <button type="submit" class="btn btn-success">Add course</button>
   </div>
 </form>
+</div>
+<!-- Professors Table and Form -->
+<div class="col-md-6">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Professors</th>
+      <th>Department</th>
+    </tr>
+  </thead>
+  <tbody>
+      #foreach ($professor in $studentsProfessors)
+      <tr>
+        <td><a href="/professor/$professor.getId()">$professor.getName()</a></td>
+        <td>$professor.getDepartment()</td>
+        <td>
+          <a href="/remove/professor/$professor.getId()/student/$student.getId()" class="btn btn-warning">
+            Remove Professor from Student</a>
+        </td>
+      </tr>
+      #end
+  </tbody>
+</table>
+<form action="/professor/$professor.getId()/addstudent" method="post">
+  <div class="form-group">
+    <label for="professor">Add professor to student</label>
+    <select name="professor">
+      #foreach ($professor in $professors)
+      <option value="$professor.getId()">$professor.getName()
+      #end
+    </select>
+    <button type="submit" class="btn btn-success">Add professor</button>
+  </div>
+</form>
+</div>
