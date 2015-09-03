@@ -76,6 +76,8 @@ public class App {
       HashMap<String, Object> model = new HashMap<String, Object>();
       Integer studentId = Integer.parseInt(request.params(":id"));
       Student student = Student.find(studentId);
+      model.put("professors", Professor.all());
+      model.put("studentsProfessors", student.getProfessors());
       model.put("student", student);
       model.put("studentsCourses", student.getCourses());
       model.put("courses", Course.all());
@@ -188,5 +190,44 @@ public class App {
     return new ModelAndView(model, layout);
   }, new VelocityTemplateEngine());
 
+  post("/professor/:id/addphoto", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+    String name = request.queryParams("name");
+    String department = request.queryParams("department");
+    Professor newProfessor = new Professor(name, department);
+    newProfessor.save();
+    response.redirect("/professors");
+    return null;
+  });
+
+   get("/delete/professor/:id", (request, response) -> {
+     HashMap<String, Object> model = new HashMap<String, Object>();
+     Integer professorId = Integer.parseInt(request.params(":id"));
+     Professor deletedProfessor = Professor.find(professorId);
+     deletedProfessor.delete();
+     response.redirect("/professors");
+     return null;
+   });
+
+   post("/professor/:id/addstudent", (request, response) -> {
+     HashMap<String, Object> model = new HashMap<String, Object>();
+     int studentId = Integer.parseInt(request.queryParams("student"));
+     Student addedStudent = Student.find(studentId);
+     Integer professorId = Integer.parseInt(request.params(":id"));
+     Professor professor = Professor.find(professorId);
+     professor.addStudent(addedStudent);
+     response.redirect("/professor/" + professorId);
+     return null;
+   });
+
+   get("/remove/professor/:id/student/:studentid", (request, response) -> {
+     HashMap<String, Object> model = new HashMap<String, Object>();
+     Integer professorId = Integer.parseInt(request.params(":id"));
+     Integer studentId = Integer.parseInt(request.params(":studentid"));
+     Professor professor = Professor.find(professorId);
+     professor.removeStudent(studentId);
+     response.redirect("/professor/" + professorId);
+     return null;
+   });
   }
 }
