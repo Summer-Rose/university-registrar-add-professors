@@ -26,6 +26,15 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/courses/search", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String course_search = request.queryParams("course_search");
+      List<Course> courses = Course.search(course_search);
+      model.put("courses", courses);
+      model.put("template", "templates/courses.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     post("/courses", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       String title = request.queryParams("title");
