@@ -18,21 +18,21 @@ public class ProfessorTest {
 
   @Test
   public void equals_returnsTrueIfNamesAreTheSame() {
-    Professor firstProfessor = new Professor("Hugh Jackman", "Tegestology");
-    Professor secondProfessor = new Professor("Hugh Jackman", "Tegestology");
+    Professor firstProfessor = new Professor("Hugh Jackman", "Tegestology", "/bin/nedflanders.jpeg");
+    Professor secondProfessor = new Professor("Hugh Jackman", "Tegestology", "/bin/nedflanders.jpeg");
     assertTrue(firstProfessor.equals(secondProfessor));
   }
 
   @Test
   public void save_savesObjectIntoDatabase() {
-    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology");
+    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology", "/bin/nedflanders.jpeg");
     myProfessor.save();
     assertTrue(Professor.all().get(0).equals(myProfessor));
   }
 
   @Test
   public void save_assignsIdToObject() {
-    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology");
+    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology", "/bin/nedflanders.jpeg");
     myProfessor.save();
     Professor savedProfessor = Professor.all().get(0);
     assertEquals(myProfessor.getId(), savedProfessor.getId());
@@ -40,7 +40,7 @@ public class ProfessorTest {
 
   @Test
   public void find_findsProfessorInDatabase_true() {
-    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology");
+    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology", "/bin/nedflanders.jpeg");
     myProfessor.save();
     Professor savedProfessor = Professor.find(myProfessor.getId());
     assertTrue(myProfessor.equals(savedProfessor));
@@ -50,7 +50,7 @@ public class ProfessorTest {
   public void addStudent_addsStudentToProfessor() {
     Student myStudent = new Student("Kitty Pryde", "2014-02-10");
     myStudent.save();
-    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology");
+    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology", "/bin/nedflanders.jpeg");
     myProfessor.save();
     myProfessor.addStudent(myStudent);
     Student savedStudent = myProfessor.getStudents().get(0);
@@ -61,7 +61,7 @@ public class ProfessorTest {
   public void getStudents_returnAllStudents_ArrayList() {
     Student myStudent = new Student("Kitty Pryde", "2014-02-10");
     myStudent.save();
-    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology");
+    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology", "/bin/nedflanders.jpeg");
     myProfessor.save();
     myProfessor.addStudent(myStudent);
     List savedStudents = myProfessor.getStudents();
@@ -72,7 +72,7 @@ public class ProfessorTest {
   public void delete_deletesAllProfessorsAndListAssociations() {
     Student myStudent = new Student("Kitty Pryde", "2014-02-10");
     myStudent.save();
-    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology");
+    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology", "/bin/nedflanders.jpeg");
     myProfessor.save();
     myProfessor.addStudent(myStudent);
     myProfessor.delete();
@@ -83,16 +83,16 @@ public class ProfessorTest {
   public void edit_newProfessorName() {
     Student myStudent = new Student("Kitty Pryde", "2014-02-10");
     myStudent.save();
-    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology");
+    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology", "/bin/nedflanders.jpeg");
     myProfessor.save();
-    Professor editProfessor = new Professor("Huge Jackman", "Tegestology");
+    Professor editProfessor = new Professor("Huge Jackman", "Tegestology", "/bin/nedflanders.jpeg");
     myProfessor.editProfessor(editProfessor.getId(), editProfessor.getName());
     assertTrue(editProfessor.getName() == "Huge Jackman");
   }
 
   @Test
   public void search_filtersProfessorsByName() {
-    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology");
+    Professor myProfessor = new Professor("Hugh Jackman", "Tegestology", "/bin/nedflanders.jpeg");
     myProfessor.save();
     List searchResult = Professor.search("hUg");
     assertTrue(myProfessor.equals(searchResult.get(0)));
