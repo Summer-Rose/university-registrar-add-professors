@@ -28,10 +28,15 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<h3>$professor.getName()'s Information</h3>
-<h6>Professor ID: $professor.getId()</h6>
-<h6>Department: $professor.getDepartment()</h6>
-<a href="/delete/professor/$professor.getId()" method="get" class="btn btn-danger">Delete Professor</a>
+<div style="width:100px;" class="col-sm-3">
+  <img src="/bin/$professor.getImagePath()">
+</div>
+<div class="col-sm-6">
+  <h3>$professor.getName()'s Information</h3>
+  <h6>Professor ID: $professor.getId()</h6>
+  <h6>Department: $professor.getDepartment()</h6>
+  <a href="/delete/professor/$professor.getId()" method="get" class="btn btn-danger">Delete Professor</a>
+</div>
 
 <table class="table table-striped">
   <thead>
@@ -63,14 +68,5 @@
       #end
     </select>
     <button type="submit" class="btn btn-success">Add Student</button>
-  </div>
-</form>
-
-<form action="/professor/$professor.getId()/addphoto" method="post">
-  <div class="form-group">
-    <label for="photo">Add image to professor</label>
-    <input type="file" name="photo" accept="image/*">
-    <!-- <input type="submit"> -->
-    <button type="submit" class="btn btn-success">Add Image</button>
   </div>
 </form>

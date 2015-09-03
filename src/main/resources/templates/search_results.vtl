@@ -75,3 +75,26 @@
     #end
   </tbody>
 </table>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Professor Name</th>
+      <th>Professor ID</th>
+      <th>Department</th>
+      <th>View &amp; Update</th>
+    </tr>
+  </thead>
+  <tbody>
+    #foreach ($professor in $professors)
+      <tr>
+        <td>$professor.getName()</td>
+        <td>$professor.getId()</td>
+        <td>$professor.getDepartment()</td>
+        <td>
+          <a href="/professor/$professor.getId()" method="get" class="btn btn-warning">View &amp; Update</a>
+        </td>
+      </tr>
+    #end
+  </tbody>
+</table>
