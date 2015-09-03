@@ -1,0 +1,67 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">University of Epicodus</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/courses">Courses</a></li>
+        <li><a href="/students">Students</a></li>
+        <li><a href="/professors">Professors</a></li>
+      </ul>
+      <form action="/search/results" class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" id="main-search" name="main-search" class="form-control" placeholder="Search Site">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<h3>$professor.getName()'s Information</h3>
+<h6>Professor ID: $professor.getId()</h6>
+<h6>Department: $professor.getDepartment()</h6>
+<a href="/delete/professor/$professor.getId()" method="get" class="btn btn-danger">Delete Professor</a>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Students</th>
+      <th>Student ID</th>
+    </tr>
+  </thead>
+  <tbody>
+      #foreach ($student in $professorsStudents)
+      <tr>
+        <td><a href="/student/$student.getId()">$student.getName()</a></td>
+        <td>$student.getId()</td>
+        <td>
+          <a href="/remove/professor/$professor.getId()/student/$student.getId()" class="btn btn-warning">
+            Remove Student from Professor</a>
+        </td>
+      </tr>
+      #end
+  </tbody>
+</table>
+
+<form action="/professor/$professor.getId()/addstudent" method="post">
+  <div class="form-group">
+    <label for="course">Add student to professor</label>
+    <select name="course">
+      #foreach ($student in $students)
+      <option value="$student.getId()">$student.getName()
+      #end
+    </select>
+    <button type="submit" class="btn btn-success">Add Student</button>
+  </div>
+</form>
