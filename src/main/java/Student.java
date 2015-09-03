@@ -37,7 +37,7 @@ public class Student {
   }
 
   public static List<Student> all() {
-    String sql = "SELECT id, name, enroll_date FROM students;";
+    String sql = "SELECT id, name, enroll_date FROM students ORDER BY name;";
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Student.class);
     }
@@ -116,12 +116,13 @@ public class Student {
   }
 
   public static List<Student> search(String searchName) {
-    String sql = "SELECT * FROM students WHERE name LIKE '%" + searchName + "%'";
+    String lowerCaseSearch = searchName.toLowerCase();
+    String sql = "SELECT * FROM students WHERE LOWER (students.name) LIKE '%" + lowerCaseSearch + "%'";
     List<Student> studentResults;
     try (Connection con = DB.sql2o.open()) {
       studentResults = con.createQuery(sql)
         .executeAndFetch(Student.class);
     }
     return studentResults;
-  }  
+  }
 }
