@@ -133,6 +133,16 @@ public class App {
       return null;
     });
 
+    get("/search/results", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String mainSearch = request.queryParams("main-search");
+      model.put("students", Student.search(mainSearch));
+      model.put("courses", Course.search(mainSearch));
+      model.put("template", "templates/search_results.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+
 
   }
 }
