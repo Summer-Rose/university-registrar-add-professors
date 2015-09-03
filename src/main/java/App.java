@@ -151,7 +151,42 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/professors", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      model.put("professors", Professor.all());
+      model.put("template", "templates/professors.vtl");
+      return new ModelAndView(model, layout);
+   }, new VelocityTemplateEngine());
 
+   post("/professors", (request, response) -> {
+     HashMap<String, Object> model = new HashMap<String, Object>();
+     String name = request.queryParams("name");
+     String department = request.queryParams("department");
+     Professor newProfessor = new Professor(name, department);
+     newProfessor.save();
+     response.redirect("/professors");
+     return null;
+  });
+
+  get("/professors/search", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+    String professor_search = request.queryParams("professor_search");
+    List<Professor> professors = Professor.search(professor_search);
+    model.put("professors", professors);
+    model.put("template", "templates/professors.vtl");
+    return new ModelAndView(model, layout);
+  }, new VelocityTemplateEngine());
+
+  get("/professor/:id", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+    Integer professorId = Integer.parseInt(request.params(":id"));
+    Professor professor = Professor.find(professorId);
+    model.put("professor", professor);
+    model.put("professorsStudents", professor.getStudents());
+    model.put("students", Student.all());
+    model.put("template", "templates/professor-info.vtl");
+    return new ModelAndView(model, layout);
+  }, new VelocityTemplateEngine());
 
   }
 }
