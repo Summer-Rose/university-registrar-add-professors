@@ -119,6 +119,16 @@ public class App {
       Integer courseId = Integer.parseInt(request.params(":courseid"));
       Course course = Course.find(courseId);
       course.removeStudent(studentId);
+      response.redirect("/student/" + studentId);
+      return null;
+    });
+
+    get("/removestudent/student/:id/course/:courseid", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Integer studentId = Integer.parseInt(request.params(":id"));
+      Integer courseId = Integer.parseInt(request.params(":courseid"));
+      Course course = Course.find(courseId);
+      course.removeStudent(studentId);
       response.redirect("/course/" + courseId);
       return null;
     });
