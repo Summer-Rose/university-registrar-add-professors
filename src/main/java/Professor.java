@@ -7,6 +7,7 @@ public class Professor {
   private int id;
   private String name;
   private String department;
+  private String image_path;
 
   public int getId() {
     return id;
@@ -20,9 +21,14 @@ public class Professor {
     return department;
   }
 
-  public Professor(String name, String department) {
+  public String getImagePath() {
+    return image_path;
+  }
+
+  public Professor(String name, String department, String image_path) {
     this.name = name;
     this.department = department;
+    this.image_path = image_path;
   }
 
   @Override
@@ -55,10 +61,11 @@ public class Professor {
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO professors (name, department) VALUES (:name, :department);";
+      String sql = "INSERT INTO professors (name, department, image_path) VALUES (:name, :department, :image_path);";
       this.id = (int) con.createQuery(sql, true)
       .addParameter("name", this.name)
       .addParameter("department", this.department)
+      .addParameter("image_path", this.image_path)
       .executeUpdate()
       .getKey();
     }
@@ -136,4 +143,6 @@ public class Professor {
     }
     return professorResults;
   }
+
+
 }
