@@ -28,6 +28,13 @@
 </nav>
 
 <h3>Courses</h3>
+<form action="/courses/search">
+  <div class="form-group">
+      <label for="course_search">Search Courses</label>
+      <input type="text" name="course_search" id="course_search" placeholder="Ex. Jake Kaad">
+      <button type="submit" class="btn btn-info">Search</button>
+  </div>
+</form>
 <form action="/courses" method="post">
   <fieldset>
     <legend>Add Course</legend>
