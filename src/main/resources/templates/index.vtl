@@ -16,6 +16,7 @@
       <ul class="nav navbar-nav">
         <li><a href="/courses">Courses</a></li>
         <li><a href="/students">Students</a></li>
+        <li><a href="/professors">Professors</a></li>
       </ul>
       <form action="/search/results" class="navbar-form navbar-left" role="search">
         <div class="form-group">
@@ -30,7 +31,7 @@
 
 <img src="/img/building.jpg">
 <!--Add Course Form-->
-<div class="col-md-6">
+<div class="col-md-3">
   <form action="/courses" method="post">
     <fieldset>
       <legend>Add Course</legend>
@@ -47,7 +48,7 @@
   </form>
 </div>
 <!--Add Student Form-->
-<div class="col-md-6">
+<div class="col-md-3">
   <form action="/students" method="post">
     <fieldset>
       <legend>Add Student</legend>
@@ -60,6 +61,23 @@
           <input type="text" id="enroll_date" name="enroll_date">
         </div>
         <button type="submit" class="btn btn-info">Add Student</button>
+    </fieldset>
+  </form>
+</div>
+<!--Add Professor Form-->
+<div class="col-md-3">
+  <form action="/professors" method="post">
+    <fieldset>
+      <legend>Add Professor</legend>
+        <div class="form-group">
+          <label for="name">Professor Name:</label>
+          <input type="text" id="name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="department">Department:</label>
+          <input type="text" id="department" name="department">
+        </div>
+        <button type="submit" class="btn btn-info">Add Professor</button>
     </fieldset>
   </form>
 </div>
