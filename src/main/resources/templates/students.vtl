@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">University epicodus = new University()</a>
+      <a class="navbar-brand" href="/">University of Epicodus</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -17,9 +17,9 @@
         <li><a href="/courses">Courses</a></li>
         <li class="active"><a href="/students">Students</a></li>
       </ul>
-      <form class="navbar-form navbar-left" role="search">
+      <form action="/search/results" class="navbar-form navbar-left" role="search">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+          <input type="text" id="main-search" name="main-search" class="form-control" placeholder="Search Site">
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
@@ -30,10 +30,24 @@
 <h3>Students</h3>
 <form action="/students/search">
   <div class="form-group">
-      <label for="student_search">Seach Students</label>
+      <label for="student_search">Search Students</label>
       <input type="text" name="student_search" id="student_search" placeholder="Ex. Jake Kaad">
       <button type="submit" class="btn btn-info">Search</button>
   </div>
+</form>
+<form action="/students" method="post">
+  <fieldset>
+    <legend>Add Student</legend>
+      <div class="form-group">
+        <label for="name">Student Name:</label>
+        <input type="text" id="name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="enroll_date">Enrollment Date:</label>
+        <input type="text" id="enroll_date" name="enroll_date">
+      </div>
+      <button type="submit" class="btn btn-info">Add Student</button>
+  </fieldset>
 </form>
 <table class="table table-striped">
   <thead>

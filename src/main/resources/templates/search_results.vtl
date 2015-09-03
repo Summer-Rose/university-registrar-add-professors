@@ -27,40 +27,50 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<h3>$student.getName()'s Information</h3>
-<h6>Student ID: $student.getId()</h6>
-<h6>Enrolled since: $student.getEnrollDate()</h6>
-<a href="/delete/student/$student.getId()" method="get" class="btn btn-danger">Delete Student</a>
+<h1>Search Results:</h1>
 
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Courses</th>
-      <th>Course Number</th>
+      <th>Student Name</th>
+      <th>Student ID</th>
+      <th>Enrollment Date</th>
+      <th>Update</th>
     </tr>
   </thead>
   <tbody>
-      #foreach ($course in $studentsCourses)
+    #foreach ($student in $students)
       <tr>
-        <td><a href="/course/$course.getId()">$course.getTitle()</a></td>
-        <td>$course.getCourseNumber()</td>
+        <td>$student.getName()</td>
+        <td>$student.getId()</td>
+        <td>$student.getEnrollDate()</td>
         <td>
-          <a href="/remove/student/$student.getId()/course/$course.getId()" class="btn btn-warning">
-            Remove Student from Course</a>
+          <a href="/student/$student.getId()" method="get" class="btn btn-warning">View &amp; Update</a>
         </td>
       </tr>
-      #end
+    #end
   </tbody>
 </table>
 
-<form action="/student/$student.getId()/addcourse" method="post">
-  <div class="form-group">
-    <label for="course">Add student to course</label>
-    <select name="course">
-      #foreach ($course in $courses)
-      <option value="$course.getId()">$course.getTitle()
-      #end
-    </select>
-    <button type="submit" class="btn btn-success">Add course</button>
-  </div>
-</form>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Course Title</th>
+      <th>Course Number</th>
+      <th>Update</th>
+    </tr>
+  </thead>
+  <tbody>
+    #foreach ($course in $courses)
+      <tr>
+        <td>$course.getTitle()</td>
+        <td>$course.getCourseNumber()</td>
+        <td>
+          <form action="/course/$course.getId()">
+            <button class="btn btn-warning" type="submit">View &amp; Update</button>
+          </form>
+        </td>
+      </tr>
+    #end
+  </tbody>
+</table>
