@@ -113,7 +113,7 @@ public class Course {
       String removeStudentQuery = "DELETE FROM courses_students_professors WHERE student_id = :student_id AND course_id = :id";
       con.createQuery(removeStudentQuery)
         .addParameter("student_id", student_id)
-        .addParameter("id", id)
+        .addParameter("id", this.getId())
         .executeUpdate();
       }
   }
