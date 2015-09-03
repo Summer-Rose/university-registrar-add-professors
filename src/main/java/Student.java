@@ -37,7 +37,7 @@ public class Student {
   }
 
   public static List<Student> all() {
-    String sql = "SELECT id, name, enroll_date FROM students ORDER BY name;";
+    String sql = "SELECT id, name, enroll_date FROM students ORDER BY name ASC;";
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Student.class);
     }
@@ -125,6 +125,17 @@ public class Student {
     }
     return studentResults;
   }
+
+
+    public void addProfessor(Professor professor) {
+      try (Connection con = DB.sql2o.open()) {
+        String sql = "INSERT INTO professors_students (professor_id, student_id) VALUES (:professor_id, :student_id)";
+        con.createQuery(sql)
+          .addParameter("professor_id", professor.getId())
+          .addParameter("student_id", this.getId())
+          .executeUpdate();
+      }
+    }
 
   public ArrayList<Professor> getProfessors() {
     try(Connection con = DB.sql2o.open()) {
