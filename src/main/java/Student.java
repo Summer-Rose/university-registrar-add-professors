@@ -125,4 +125,22 @@ public class Student {
     }
     return studentResults;
   }
+
+  public ArrayList<Professor> getProfessors() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT professor_id FROM professors_students WHERE student_id = :student_id";
+      List<Integer> professorIds = con.createQuery(sql)
+        .addParameter("student_id", this.getId())
+        .executeAndFetch(Integer.class);
+      ArrayList<Professor> professors = new ArrayList<Professor>();
+      for (Integer professorId : professorIds) {
+        String professorQuery = "SELECT * FROM professors WHERE id = :professorId";
+        Professor professor = con.createQuery(professorQuery)
+          .addParameter("professorId", professorId)
+          .executeAndFetchFirst(Professor.class);
+        professors.add(professor);
+      }
+      return professors;
+    }
+  }
 }
