@@ -117,4 +117,15 @@ public class Course {
         .executeUpdate();
       }
   }
+
+  public static List<Course> search(String searchTitle) {
+    String lowerCaseSearch = searchTitle.toLowerCase();
+    String sql = "SELECT * FROM courses WHERE LOWER (courses.title) LIKE '%" + lowerCaseSearch + "%'";
+    List<Course> coursesResults;
+    try (Connection con = DB.sql2o.open()) {
+      coursesResults = con.createQuery(sql)
+        .executeAndFetch(Course.class);
+    }
+    return coursesResults;
+  }
 }
