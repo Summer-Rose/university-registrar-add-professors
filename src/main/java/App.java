@@ -57,6 +57,7 @@ public class App {
 
    get("/students", (request, response) -> {
      HashMap<String, Object> model = new HashMap<String, Object>();
+
      model.put("students", Student.all());
      model.put("template", "templates/students.vtl");
      return new ModelAndView(model, layout);
@@ -147,6 +148,7 @@ public class App {
     get("/search/results", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       String mainSearch = request.queryParams("main-search");
+      model.put("professors", Professor.search(mainSearch));
       model.put("students", Student.search(mainSearch));
       model.put("courses", Course.search(mainSearch));
       model.put("template", "templates/search_results.vtl");
@@ -164,7 +166,8 @@ public class App {
      HashMap<String, Object> model = new HashMap<String, Object>();
      String name = request.queryParams("name");
      String department = request.queryParams("department");
-     Professor newProfessor = new Professor(name, department);
+     String imagePath = request.queryParams("avatar");
+     Professor newProfessor = new Professor(name, department, imagePath);
      newProfessor.save();
      response.redirect("/professors");
      return null;
@@ -189,16 +192,6 @@ public class App {
     model.put("template", "templates/professor-info.vtl");
     return new ModelAndView(model, layout);
   }, new VelocityTemplateEngine());
-
-  post("/professor/:id/addphoto", (request, response) -> {
-    HashMap<String, Object> model = new HashMap<String, Object>();
-    String name = request.queryParams("name");
-    String department = request.queryParams("department");
-    Professor newProfessor = new Professor(name, department);
-    newProfessor.save();
-    response.redirect("/professors");
-    return null;
-  });
 
    get("/delete/professor/:id", (request, response) -> {
      HashMap<String, Object> model = new HashMap<String, Object>();
@@ -229,5 +222,27 @@ public class App {
      response.redirect("/professor/" + professorId);
      return null;
    });
+
+   post("/student/:id/addprofessor", (request, response) -> {
+     HashMap<String, Object> model = new HashMap<String, Object>();
+     int professorId = Integer.parseInt(request.queryParams("professor"));
+     Professor addedProfessor = Professor.find(professorId);
+     Integer studentId = Integer.parseInt(request.params(":id"));
+     Student student = Student.find(studentId);
+     student.addProfessor(addedProfessor);
+     response.redirect("/student/" + studentId);
+     return null;
+   });
+
+
+   post("/professor/:id/addphoto", (request, response) -> {
+     HashMap<String, Object> model = new HashMap<String, Object>();
+     String imagePath = request.queryParams("avatar");
+     model.put("avatar", imagePath);
+     int professorId = Integer.parseInt(request.queryParams("professor"));
+     response.redirect("/professor/" + professorId);
+     return null;
+   });
+
   }
 }
