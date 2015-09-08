@@ -5,7 +5,7 @@
 ##### Summer Brochtrup & Aimee Reiss
 
 ## Description
-A website where users can add/remove courses and students, search for students by name, and add/remove students to courses.
+A website where users can add/remove courses, students, and professors, search for content by name, and add/remove students to courses and associated professors.
 
 ## Setup
 
